@@ -15,7 +15,7 @@ router.post("/create", verifyToken, async (req, res) => {
       return res.status(400).json({ message: "Name is required for the folder" });
     }
     
-    // Create new folder object
+    // Create new folder object with userId from token
     const folder = new Folder({ name, parentId, userId: req.userId });
     await folder.save();
     

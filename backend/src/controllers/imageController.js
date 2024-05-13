@@ -2,25 +2,28 @@
 
 const Image = require("../models/Image");
 
-// Image upload controller
+// Image upload route
 const uploadImage = async (req, res) => {
   try {
-    // Validate file and other fields
     if (!req.file) {
-      throw new Error("Please upload an image");
+      return res.status(400).json({ message: "Please upload an image" });
     }
-    // Save image details to the database
+
+    // Create new image object with userId from token
     const image = new Image({
       filename: req.file.filename,
-      folderId: req.body.folderId, // Assuming you have a folderId associated with each image
-      userId: req.userId // Assuming you store userId in req.userId after token verification
+      folderId: req.body.folderId,
+      userId: req.userId
     });
     await image.save();
+
     res.status(201).json({ message: "Image uploaded successfully" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 
 // Image search controller
 const searchImages = async (req, res) => {
