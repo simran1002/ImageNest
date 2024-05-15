@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const API_URL = 'https://imagenest.onrender.com/api';
+const API_URL = 'https://imagenest.onrender.com/api/images';
 
 export const uploadImage = async (formData) => {
   try {

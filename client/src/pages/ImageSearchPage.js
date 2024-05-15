@@ -10,10 +10,10 @@ const ImageSearchPage = () => {
 
   return (
     <div>
-      <h1>Image Search</h1>
+      <h1><center>Image Search</center></h1>
       <ImageSearchForm onSearch={handleSearch} />
       <div>
-        <h2>Search Results</h2>
+        <h4><center>Search Results</center></h4>
         <ul>
           {searchResults.map((image, index) => (
             <li key={index}>{image.filename}</li>

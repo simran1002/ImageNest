@@ -9,12 +9,10 @@ const folderSchema = new mongoose.Schema({
   },
   parentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Folder', // Reference to the Folder model itself for self-referencing
     default: null
   },
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Assuming you have a User model for user authentication
+    type: String,
     required: true
   }
 });

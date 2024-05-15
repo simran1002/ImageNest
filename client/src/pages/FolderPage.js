@@ -4,7 +4,7 @@ import FolderForm from '../components/FolderForm';
 const FolderPage = () => {
   return (
     <div>
-      <h1>Create Folder</h1>
+      <h1><center>Create Folder</center></h1>
       <FolderForm />
     </div>
   );

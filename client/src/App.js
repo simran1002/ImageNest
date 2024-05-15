@@ -15,7 +15,7 @@ const App = () => {
       <Routes> {/* Use Routes instead of Switch */}
         <Route path="/signup" element={<SignupPage />} /> {/* Define routes using element prop */}
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/folders" element={<FolderPage />} />
+        <Route path="/folder" element={<FolderPage />} />
         <Route path="/upload" element={<ImageUploadPage />} />
         <Route path="/search" element={<ImageSearchPage />} />
         {/* Add more routes as needed */}
