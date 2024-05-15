@@ -1,39 +1,45 @@
-// backend/src/controllers/imageController.js
+// Image Controller (imageController.js)
+const Image = require('../models/Image');
 
-const Image = require("../models/Image");
-
-// Image upload route
+// Upload Image
 const uploadImage = async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({ message: "Please upload an image" });
+    if (!req.file || !req.body.name) {
+      return res.status(400).json({ message: 'Name and Image are required fields' });
     }
 
-    // Create new image object with userId from token
-    const image = new Image({
-      filename: req.file.filename,
-      folderId: req.body.folderId,
-      userId: req.userId
-    });
-    await image.save();
+    // Assuming user data is attached to the request object
+    const userId = req.user ? req.user.id : null;
 
-    res.status(201).json({ message: "Image uploaded successfully" });
+    const imageURL = req.file.path; // Assuming Multer stores uploaded file path in req.file.path
+
+    const newImage = new Image({
+      name: req.body.name,
+      imageURL,
+      folderId: req.body.folderId, // You may add folderId if you're organizing images into folders
+      userId: userId // Using the userId obtained from req.user
+    });
+
+    await newImage.save();
+    res.status(201).json({ message: 'Image uploaded successfully' });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
 
-
-// Image search controller
+// Search Images
 const searchImages = async (req, res) => {
   try {
     const { imageName } = req.query;
-    // Assuming you have a userId associated with each image and you want to search only within the user's images
-    const images = await Image.find({ userId: req.userId, filename: { $regex: imageName, $options: "i" } });
+    const userId = req.user.id;
+
+    const images = await Image.find({ userId, name: { $regex: imageName, $options: 'i' } });
     res.json(images);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 

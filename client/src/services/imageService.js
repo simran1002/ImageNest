@@ -1,4 +1,4 @@
-// imageService.js
+// ../services/imageService.js
 
 import axios from 'axios';
 
@@ -11,6 +11,15 @@ export const uploadImage = async (formData) => {
         'Content-Type': 'multipart/form-data'
       }
     });
+    return response.data;
+  } catch (error) {
+    throw error.response.data.message;
+  }
+};
+
+export const searchImages = async (imageName) => {
+  try {
+    const response = await axios.get(`${API_URL}/images/search?imageName=${imageName}`);
     return response.data;
   } catch (error) {
     throw error.response.data.message;

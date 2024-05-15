@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { searchImages } from '../services/imageService';
+import { searchImages } from '../services/imageService'; // Import the searchImages function
 
 const ImageSearchForm = ({ onSearch }) => {
   const [imageName, setImageName] = useState('');
@@ -7,7 +7,7 @@ const ImageSearchForm = ({ onSearch }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const images = await searchImages(imageName);
+      const images = await searchImages(imageName); // Use the searchImages function
       onSearch(images);
     } catch (error) {
       // Handle error (display error message)

@@ -1,29 +1,28 @@
-// backend/src/routes/images.js
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const Image = require("../models/Image");
+const multer = require('multer');
+const path = require('path');
+const Image = require('../models/Image');
+const { uploadImage, searchImages } = require("../controllers/imageController");
 
-router.post("/upload", async (req, res) => {
-  try {
-    // Handle image upload logic here
-    res.status(201).json({ message: "Image uploaded successfully" });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+// Multer storage configuration
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Destination folder for storing uploaded images
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + ext); // Generate unique filename for each uploaded image
+  },
 });
 
-router.get("/:id", async (req, res) => {
-  try {
-    const image = await Image.findById(req.params.id);
-    if (!image) {
-      throw new Error("Image not found");
-    }
-    res.json({ image });
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-});
+// Multer upload configuration
+const upload = multer({ storage });
 
-// Implement other image endpoints (PUT, DELETE, SEARCH) as needed
+// Upload image
+router.post("/upload", upload.single("image"), uploadImage);
+
+// Search images
+router.get("/search", searchImages);
 
 module.exports = router;
