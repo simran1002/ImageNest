@@ -8,14 +8,6 @@ const FolderForm = () => {
   const [userId, setUserId] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Retrieve user ID from local storage after component mounts
-    const storedUserId = localStorage.getItem('userId');
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -56,7 +48,7 @@ const FolderForm = () => {
         type="text"
         placeholder="User ID"
         value={userId}
-        readOnly
+        onChange={(e) => setUserId(e.target.value)}
       />
       <button type="submit">Create Folder</button>
     </form>

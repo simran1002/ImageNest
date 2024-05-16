@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { uploadImage } from '../services/imageService';
+import { useNavigate } from 'react-router-dom';
 
 const ImageUploadForm = () => {
   const [image, setImage] = useState(null);
   const [folderId, setFolderId] = useState('');
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -20,9 +22,11 @@ const ImageUploadForm = () => {
       formData.append('image', image);
       formData.append('folderId', folderId);
       await uploadImage(formData);
-      // Redirect or show success message
+      // Navigate to the search page after successful image upload
+      navigate('/search');
     } catch (error) {
       // Handle error (display error message)
+      console.error('Image upload failed:', error.message);
     }
   };
 
@@ -30,7 +34,7 @@ const ImageUploadForm = () => {
     <form onSubmit={handleSubmit}>
       <input
         type="file"
-        accept="image"
+        accept="image/*"
         onChange={handleImageChange}
       />
       <input
