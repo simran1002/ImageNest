@@ -12,11 +12,8 @@ const SignupForm = () => {
     e.preventDefault();
     try {
       // Call the signup function from authService to save user data
-      const userData = await signup({ username, password });
+      await signup({ username, password });
       
-      // Store user ID in local storage after signup
-      localStorage.setItem('userId', userData.userId);
-
       // Redirect to the login page upon successful signup
       navigate('/login');
     } catch (error) {
