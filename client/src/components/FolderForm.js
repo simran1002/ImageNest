@@ -8,35 +8,35 @@ const FolderForm = () => {
   const [userId, setUserId] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Retrieve user ID from local storage after component mounts
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // If parentId is empty, set it to null
       const newParentId = parentId.trim() === '' ? null : parentId;
-  
+
       // Ensure userId is set
       if (!userId) {
         throw new Error('User ID is required.'); // Throw an error if userId is not set
       }
-  
+
       // Call createFolder function with name, parentId, and userId
       const newFolder = await createFolder(name, newParentId, userId);
-  
-      // Check if newFolder object and its id property exist
-      if (newFolder && newFolder.id) {
-        // Redirect to the image upload page with the new folder ID
-        navigate(`/upload`);
-      } else {
-        throw new Error('Folder ID not found.'); // Throw an error if folder ID is not found
-      }
+
+      // Redirect to the image upload page
+      navigate('/upload');
     } catch (error) {
       // Handle error (display error message)
       console.error('Folder creation failed:', error.message);
     }
   };
-  
-  
 
   return (
     <form onSubmit={handleSubmit}>
@@ -56,7 +56,7 @@ const FolderForm = () => {
         type="text"
         placeholder="User ID"
         value={userId}
-        onChange={(e) => setUserId(e.target.value)}
+        readOnly
       />
       <button type="submit">Create Folder</button>
     </form>
