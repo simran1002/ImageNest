@@ -30,7 +30,7 @@ const ImageUploadForm = () => {
     <form onSubmit={handleSubmit}>
       <input
         type="file"
-        accept="image/*"
+        accept="image"
         onChange={handleImageChange}
       />
       <input

@@ -6,7 +6,7 @@ const API_URL = 'https://imagenest.onrender.com/api/images';
 
 export const uploadImage = async (formData) => {
   try {
-    const response = await axios.post(`${API_URL}/images/upload`, formData, {
+    const response = await axios.post(`${API_URL}/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
